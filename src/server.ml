@@ -16,12 +16,13 @@ let rec copy_blocks buffer r w =
     >>= fun() ->
     copy_blocks buffer r w
 
-let run ()=
-  print_endline "start server on port: 8765...";
+let run ~port =
+  let line = "start server on port:"^(string_of_int port)^"..." in
+    print_endline line;
   let host_and_port = 
     Tcp.Server.create
       ~on_handler_error:`Raise
-      (Tcp.on_port 8765)
+      (Tcp.on_port port)
       (fun _addr r w ->
          let buffer = String.create (16 * 1024) in
          copy_blocks buffer r w)

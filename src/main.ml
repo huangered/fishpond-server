@@ -5,5 +5,5 @@ let () =
   send "channel 1" "message";
   send "channel 2" "message";
   send "channel 3" "message";
-  run ();
+  run 12345;
   never_returns (Scheduler.go())
