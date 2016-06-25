@@ -1,20 +1,12 @@
 open Core.Std
 open Async.Std
-
-let send channel message =
-  let line = channel ^ ":"  ^ message in
-    print_endline line
-
-let rec copy_blocks buffer r w =
-  Reader.read r buffer
-  >>= function
-  |`Eof -> return()
-  |`Ok bytes_read ->
-    print_endline buffer;
-    Writer.write w buffer ~len:bytes_read;
-    Writer.flushed w
-    >>= fun() ->
-    copy_blocks buffer r w
+open Header
+let rec read r w =
+  Request.parse_fst_line r >>= function
+  | `Eof -> return ()
+  | `Ok (m, u, v) -> 
+    header r w >>= function 
+    | `Eof -> Response.write_resp "\ntest" r w
 
 let run ~port =
   let line = "start server on port:"^(string_of_int port)^"..." in
@@ -24,7 +16,6 @@ let run ~port =
       ~on_handler_error:`Raise
       (Tcp.on_port port)
       (fun _addr r w ->
-         let buffer = String.create (16 * 1024) in
-         copy_blocks buffer r w)
+         read r w)
    in
    ignore (host_and_port : (Socket.Address.Inet.t, int) Tcp.Server.t Deferred.t)
