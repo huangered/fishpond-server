@@ -49,5 +49,5 @@ let read r w =
   | `Eof -> return (`Wrong)
   | `Ok (m, u, v, p) -> 
     Header.parse_header String.Map.empty r w >>= function 
-    | `Ok (header_map) -> return (`Ok (m, u, v, header_map))
+    | `Ok (headers) -> return (`Ok (m, u, v, p, headers))
     

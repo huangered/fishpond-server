@@ -4,9 +4,10 @@ open Async.Std
 let go r w=
   Request.read r w >>=
   function
-  | `Ok (m, u, v, header_map) -> Response.write_resp "\ntest" r w
+  | `Ok (m, u, v, p, headers) -> Response.write_resp "\ntest" r w
 
 let run ~port =
+  print_endline (String_io.read_all_file ~f:"src/string_io.ml");
   let line = "start server on port:"^(string_of_int port)^"..." in
     print_endline line;
   let host_and_port = 
