@@ -3,6 +3,7 @@ open Async.Std
 
 let static_map = String.Map.empty
 
+(* load all html, js, css, etc static files in the folder *)
 let load_static_file ~f =
   let word = "load static files in " ^ f in
     print_endline word
