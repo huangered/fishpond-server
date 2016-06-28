@@ -1,12 +1,19 @@
 open Core.Std
 open Async.Std
 
+let static_map = String.Map.empty
+
+let load_static_file ~f =
+  let word = "load static files in " ^ f in
+    print_endline word
+
 let go r w=
   Request.read r w >>=
   function
   | `Ok (m, u, v, p, headers) -> Response.write_resp "\ntest" r w
 
 let run ~port =
+  load_static_file ~f:"src";
   print_endline (String_io.read_all_file ~f:"src/string_io.ml");
   let line = "start server on port:"^(string_of_int port)^"..." in
     print_endline line;
