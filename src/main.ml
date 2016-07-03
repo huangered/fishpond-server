@@ -2,5 +2,6 @@ open Core.Std
 open Async.Std
 open Server
 let () =
-  run 12345;
+  let port = 12345 in 
+    run port;
   never_returns (Scheduler.go())
