@@ -1,12 +1,12 @@
 (* code.ml the server const variable, http_code, etc *)
 
 (* page 18 *)
-type http_version = 
+type http_version = [
   | `HTTP_1_0
-  | `HTTP_1_1
+  | `HTTP_1_1]
 
 (* page 36 *)
-type meth = 
+type meth = [
   | `OPTIONS
   | `GET
   | `HEAD
@@ -14,30 +14,7 @@ type meth =
   | `PUT
   | `DELETE
   | `TRACE
-  | `CONNECT
-
-type status_code =
-  | 100
-  | 101
-  | 200
-  | 201
-  | 202
-  | 203
-  | 204
-  | 205
-  | 206
-  | 300
-  | 301
-  | 302
-  | 303
-  | 304
-  | 305
-  | 307
-  | 400
-  | 401
-  | 402
-  | 403
-  | 404
+  | `CONNECT]
 
 let get_basic_rules = function
   | `CR -> '\r'
@@ -87,13 +64,13 @@ let get_reason = function
   | 409 -> "Conflict"
   | 410 -> "Gone"
   | 411 -> "Length Required"
-  | 412- > "Precondition Failed"
+  | 412 -> "Precondition Failed"
   | 413 -> "Request Entity Too Large"
   | 414 -> "Request-URI Too Large"
   | 415 -> "Unsupported Media Type"
   | 416 -> "Requested range not satisfiable"
-  | 417 ->"Expectation Failed"
-  | 500- > "Internal Server Error"
+  | 417 -> "Expectation Failed"
+  | 500 -> "Internal Server Error"
   | 501 -> "Not Implemented"
   | 502 -> "Bad Gateway"
   | 503 -> "Service Unavailable"
