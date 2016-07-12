@@ -16,7 +16,7 @@ let rec findPair pairs paraMap =
       let newMap = Map.add paraMap ~key:k ~data:v in 
         findPair ll newMap
 
-(* analysis the url parameter into map*)
+(* analysis the url parameter into map *)
 let combine paras =
   let pairs = String.split paras ~on:'&' in
     findPair pairs String.Map.empty

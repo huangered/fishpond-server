@@ -10,6 +10,7 @@ let run ~port =
   
   Conf.check_cfg "src/string_io.ml";
   print_endline "register route......";
+  Route.register_route_dir "/abc" "src/abc";
   print_endline "request action......";
   let line = "start server on port:"^(string_of_int port)^"..." in
     print_endline line;
