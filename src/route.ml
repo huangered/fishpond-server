@@ -17,5 +17,5 @@ let register_route url handler =
 let unregister_route url handler = 
   print_endline "unregister route"
   
-let run url meth = 
+let route url ?meth = 
   print_endline "run"
