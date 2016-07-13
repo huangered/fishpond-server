@@ -16,6 +16,8 @@ let register_route url handler =
   
 let unregister_route url handler = 
   print_endline "unregister route"
-  
-let route url ?meth = 
-  print_endline "run"
+
+(* method recevie url and ?meth return a handler *)  
+let route url ?meth =
+  let handler = Hashtbl.find route_hash url in
+    print_endline url
