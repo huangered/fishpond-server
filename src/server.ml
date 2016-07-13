@@ -1,10 +1,13 @@
 open Core.Std
 open Async.Std
 
+open Response
+
 let go r w=
   Request.read r w >>=
   function
-  | `Ok (meth, url, http_ver, parameters, headers) -> Response.write_resp "\ntest" r w
+  | `Ok (meth, url, http_ver, parameters, headers)
+    -> Response.write_resp {http_ver="HTTP/1.1";status_code=200;reason_phrase="test";message="\ntest"} r w
 
 let run ~port =
   

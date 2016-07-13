@@ -47,7 +47,7 @@ let parse_request_line r =
 let read r w =
   parse_request_line r >>= function
   | `Eof -> return (`Wrong)
-  | `Ok (m, u, v, p) -> 
-    Header.parse_header String.Map.empty r w >>= function 
-    | `Ok (headers) -> return (`Ok (m, u, v, p, headers))
+  | `Ok (meth, url, version, parameters) -> 
+    Header.parse String.Map.empty r w >>= function 
+    | `Ok (headers) -> return (`Ok (meth, url, version, parameters, headers))
     
