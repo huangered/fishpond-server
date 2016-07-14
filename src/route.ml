@@ -18,6 +18,8 @@ let unregister_route url handler =
   print_endline "unregister route"
 
 (* method recevie url and ?meth return a handler *)  
-let route url ?meth =
-  let handler = Hashtbl.find route_hash url in
-    print_endline url
+let route url meth =
+  try
+    Hashtbl.find route_hash url
+  with
+    Not_found -> "No found"
