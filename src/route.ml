@@ -1,6 +1,14 @@
 (* route.ml *)
+open Request
+open Response
 
 let route_hash = Hashtbl.create 256;;
+
+module File_handler = struct
+  let name = "file handler"
+  let get req resp  = 
+    {http_ver="HTTP/1.1";status_code=200;reason_phrase="test";message="\ntest"}
+end
 
 let register_route_dir url folder =
   let line =  "register folder: " ^ folder ^ " -> " ^ url in
@@ -20,6 +28,8 @@ let unregister_route url handler =
 (* method recevie url and ?meth return a handler *)  
 let route url meth =
   try
-    Hashtbl.find route_hash url
+    let handler = Hashtbl.find route_hash url in
+      (`Ok, File_handler.name)
   with
-    Not_found -> "No found"
+    Not_found -> (`Ok, File_handler.name) 
+
