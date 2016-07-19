@@ -1,7 +1,6 @@
 (* handler sig, support get, post, delete, put, etc method *)
 
-module type Http_handler =
+module type Handler_sig =
 sig
-  var name : string
-  var url : string
+  val name : string
 end

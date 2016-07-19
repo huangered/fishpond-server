@@ -1,4 +1,5 @@
 (* route.ml *)
+open Handlersig
 open Request
 open Response
 
@@ -9,6 +10,7 @@ module File_handler = struct
   let get req resp  = 
     {http_ver="HTTP/1.1";status_code=200;reason_phrase="test";message="\ntest"}
 end
+
 
 let register_route_dir url folder =
   let line =  "register folder: " ^ folder ^ " -> " ^ url in
@@ -29,7 +31,8 @@ let unregister_route url handler =
 let route url meth =
   try
     let handler = Hashtbl.find route_hash url in
-      (`Ok, File_handler.name)
+      let h = (module File_handler : Handler_sig) in 
+        (`Ok, h)
   with
-    Not_found -> (`Ok, File_handler.name) 
+    Not_found -> (`Ok, (module File_handler : Handler_sig))
 
