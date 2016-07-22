@@ -3,7 +3,7 @@ Name:        pusher
 Version:     0.1
 Synopsis:    the ocaml push server
 Authors:     Peter Huang
-License:     MPL
+License:     MIT
 Plugins:     META (0.4)
 
 Executable pusher
