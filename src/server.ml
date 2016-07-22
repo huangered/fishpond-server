@@ -2,18 +2,24 @@ open Core.Std
 open Async.Std
 
 open Handlersig
+open Request
 open Response
 
 
 let go r w=
   Request.read r w >>=
   function
-  | `Ok (meth, url, http_ver, parameters, headers)
-    -> match Route.route url meth with
+  | `Ok (meth_raw, url, http_ver, parameters, headers)
+    ->begin
+       match Route.route url meth_raw with
        | (`Ok, handler) ->
         let module Name = (val handler : Handler_sig) in
 	        print_endline ("Handler: " ^ Name.name);
-          Response.write_resp {http_ver="HTTP/1.1";status_code=200;reason_phrase="test";message="\ntest"} r w
+          match meth_raw with
+          | "GET" -> Response.write_resp (Name.get {meth=meth_raw; resource=url;http_version=http_ver})  r w
+          | _ -> Response.write_resp {http_ver="HTTP/1.1";status_code=200;reason_phrase="test";message="\ntest"} r w
+      end
+  | (`Wrong) -> return ()        
 
 let run ~port =
   print_endline "register route......";
