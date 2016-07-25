@@ -15,6 +15,7 @@ module File_handler = struct
         | `Yes ->
                let data = String_io.read_all_file ~f:path in
                  {http_ver="HTTP/1.1";status_code=200;reason_phrase="test";message=data}
-        | _ -> {http_ver="HTTP/1.1";status_code=200;reason_phrase="test";message="\nNo found"}
+        | _ -> print_endline ("Url:"^path^" not found");
+	       {http_ver="HTTP/1.1";status_code=404;reason_phrase="test";message="\nNo found"}
      
 end
