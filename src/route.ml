@@ -5,9 +5,9 @@ open Request
 open Response
 open String_io
 
-open Sys
+open Core.Std
 
-let route_hash = Hashtbl.create 256;;
+let route_hash = String.Table.create () ~size:256;;
 
 let register_route_dir url folder =
   let line =  "register folder: " ^ folder ^ " -> " ^ url in
@@ -26,10 +26,8 @@ let unregister_route url handler =
 
 (* method recevie url and ?meth return a handler *)  
 let route url meth =
-  try
-    let handler = Hashtbl.find route_hash url in
-      let h = (module File_handler : Handler_sig) in 
-        (`Ok, h)
-  with
-    Not_found -> (`Ok, (module File_handler : Handler_sig))
+  match Hashtbl.find route_hash url with
+  | Some(h) -> let h = (module File_handler : Handler_sig) in (`Ok, h)
+  | None    -> let h = (module File_handler : Handler_sig) in (`Ok, h)
+ 
 
