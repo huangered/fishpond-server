@@ -4,7 +4,7 @@ open Async.Std
 open Handlersig
 open Request
 open Response
-
+open File_handler
 
 let go r w=
   Request.read r w >>=
@@ -23,7 +23,7 @@ let go r w=
 
 let run ~port =
   print_endline "register route......";
-  Route.register_route_dir "/" "resource";
+  Route.register_router "/" (module File_handler : Handler_sig);
   print_endline "request action......";
   let line = "start server on port:"^(string_of_int port)^"..." in
     print_endline line;
