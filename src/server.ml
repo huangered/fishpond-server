@@ -27,6 +27,8 @@ let run ~port =
   print_endline "request action......";
   let line = "start server on port:"^(string_of_int port)^"..." in
     print_endline line;
+  print_endline "read current fold";
+  String_io.read_fold ".";
   let host_and_port = 
     Tcp.Server.create
       ~on_handler_error:`Raise
